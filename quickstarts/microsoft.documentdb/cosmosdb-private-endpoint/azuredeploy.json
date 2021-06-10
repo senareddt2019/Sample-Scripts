@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.1.14562",
-      "templateHash": "14879459867985896336"
+      "templateHash": "4922039022786483911"
     }
   },
   "parameters": {
@@ -50,7 +50,7 @@
     {
       "type": "Microsoft.Network/virtualNetworks/subnets",
       "apiVersion": "2020-06-01",
-      "name": "[format('{0}/default', parameters('virtualNetworkName'))]",
+      "name": "[format('{0}/{1}', parameters('virtualNetworkName'), 'default')]",
       "properties": {
         "addressPrefix": "172.20.0.0/24",
         "privateEndpointNetworkPolicies": "Disabled"
@@ -90,7 +90,7 @@
       "location": "[parameters('location')]",
       "properties": {
         "subnet": {
-          "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', split(format('{0}/default', parameters('virtualNetworkName')), '/')[0], split(format('{0}/default', parameters('virtualNetworkName')), '/')[1])]"
+          "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), 'default')]"
         },
         "privateLinkServiceConnections": [
           {
@@ -106,7 +106,7 @@
       },
       "dependsOn": [
         "[resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('accountName'))]",
-        "[resourceId('Microsoft.Network/virtualNetworks/subnets', split(format('{0}/default', parameters('virtualNetworkName')), '/')[0], split(format('{0}/default', parameters('virtualNetworkName')), '/')[1])]"
+        "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), 'default')]"
       ]
     }
   ]
